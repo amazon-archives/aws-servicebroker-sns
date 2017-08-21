@@ -1,0 +1,49 @@
+name: sns-apb
+image: ansibleplaybookbundle/sns-apb
+description: 'Managed sns topic'
+tags:
+  - amazon
+  - sns
+bindable: true
+async: optional
+parameters:
+  - stack_identifier:
+      title: Unique Stack Identifier
+      description: 'Unique identifier to be included in the CloudFormation Stack Name to prevent naming collisions. Must only contain alphanumeric characters and hyphens. (e.g. "sample-rds-stack", "production-rds-04-2017")'
+      type: string
+  - aws_access_key:
+      title: AWS Access Key
+      description: 'AWS Access Key to authenticate to AWS with.'
+      type: string
+  - aws_secret_key:
+      title: AWS Secret Key
+      description: 'AWS Secret Key to authenticate to AWS with.'
+      type: string
+  - region:
+      title: AWS Region
+      description: 'AWS Region to create RDS instance in.'
+      type: string
+      default: "us-west-2"
+  - SubscriptionEndPoint:
+      title: Subrcription End Point
+      description: 'The endpoint that receives notifications from the Amazon SNS topic. The
+      endpoint value depends on the protocol that you specify. This could be a
+      URL or ARN'
+      type: string
+   - SubscriptionProtocol:
+      title: Subscription Protocol
+      description: 'The subscription's protocol'
+      type: string
+      default: "sqs"
+   required:
+  - stack_identifier
+  - aws_access_key
+  - aws_secret_key
+  - region
+  - SubscriptionEndPoint
+  - SubscriptionProtocol
+metadata:
+  displayName: "Amazon SNS"
+  longDescription: "Amazon Simple Notification Service (Amazon SNS) is a web service that enables applications, end-users, and devices to instantly send and receive notifications from the cloud"
+  imageUrl: "https://d0.awsstatic.com/cloud-storage/Deck_Databases.png"
+  documentationUrl: "https://aws.amazon.com/documentation/sns/"
