@@ -9,7 +9,7 @@ async: optional
 parameters:
   - stack_identifier:
       title: Unique Stack Identifier
-      description: 'Unique identifier to be included in the CloudFormation Stack Name to prevent naming collisions. Must only contain alphanumeric characters and hyphens. (e.g. "sample-rds-stack", "production-rds-04-2017")'
+      description: 'Unique identifier to be included in the CloudFormation Stack Name to prevent naming collisions. Must only contain alphanumeric characters and hyphens. (e.g. "sample-sns-stack", "production-sns-08-2017")'
       type: string
   - aws_access_key:
       title: AWS Access Key
@@ -26,24 +26,15 @@ parameters:
       default: "us-west-2"
   - SubscriptionEndPoint:
       title: Subrcription End Point
-      description: 'The endpoint that receives notifications from the Amazon SNS topic. The
-      endpoint value depends on the protocol that you specify. This could be a
-      URL or ARN'
+      description: 'The endpoint that receives notifications from the Amazon SNS topic. The endpoint value depends on the protocol that you specify. This could be a URL or ARN'
       type: string
-   - SubscriptionProtocol:
+  - SubscriptionProtocol:
       title: Subscription Protocol
-      description: 'The subscription's protocol'
+      description: 'The subscriptions protocol'
       type: string
       default: "sqs"
-   required:
-  - stack_identifier
-  - aws_access_key
-  - aws_secret_key
-  - region
-  - SubscriptionEndPoint
-  - SubscriptionProtocol
 metadata:
-  displayName: "Amazon SNS"
-  longDescription: "Amazon Simple Notification Service (Amazon SNS) is a web service that enables applications, end-users, and devices to instantly send and receive notifications from the cloud"
-  imageUrl: "https://d0.awsstatic.com/cloud-storage/Deck_Databases.png"
-  documentationUrl: "https://aws.amazon.com/documentation/sns/"
+    displayName: "Amazon SNS"
+    longDescription: "Amazon Simple Notification Service (Amazon SNS) is a web service that enables applications, end-users, and devices to instantly send and receive notifications from the cloud"
+    imageUrl: "https://d0.awsstatic.com/cloud-storage/Deck_Databases.png"
+    documentationUrl: "https://aws.amazon.com/documentation/sns/"
