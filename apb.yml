@@ -6,35 +6,46 @@ tags:
   - sns
 bindable: true
 async: optional
-parameters:
-  - stack_identifier:
-      title: Unique Stack Identifier
-      description: 'Unique identifier to be included in the CloudFormation Stack Name to prevent naming collisions. Must only contain alphanumeric characters and hyphens. (e.g. "sample-sns-stack", "production-sns-08-2017")'
-      type: string
-  - aws_access_key:
-      title: AWS Access Key
-      description: 'AWS Access Key to authenticate to AWS with.'
-      type: string
-  - aws_secret_key:
-      title: AWS Secret Key
-      description: 'AWS Secret Key to authenticate to AWS with.'
-      type: string
-  - region:
-      title: AWS Region
-      description: 'AWS Region to create RDS instance in.'
-      type: string
-      default: "us-west-2"
-  - SubscriptionEndPoint:
-      title: Subrcription End Point
-      description: 'The endpoint that receives notifications from the Amazon SNS topic. The endpoint value depends on the protocol that you specify. This could be a URL or ARN'
-      type: string
-  - SubscriptionProtocol:
-      title: Subscription Protocol
-      description: 'The subscriptions protocol'
-      type: string
-      default: "sqs"
-metadata:
-    displayName: "Amazon SNS"
-    longDescription: "Amazon Simple Notification Service (Amazon SNS) is a web service that enables applications, end-users, and devices to instantly send and receive notifications from the cloud"
-    imageUrl: "https://d0.awsstatic.com/cloud-storage/Deck_Databases.png"
-    documentationUrl: "https://aws.amazon.com/documentation/sns/"
+plans:
+  - name: default
+    description: 'Managed SNS Topic'
+    free: false
+    parameters:
+      - name: stack_identifier
+        required: true
+        title: Unique Stack Identifier
+        description: 'Unique identifier to be included in the CloudFormation Stack Name to prevent naming collisions. Must only contain alphanumeric characters and hyphens. (e.g. "sample-sns-stack", "production-sns-08-2017")'
+        type: string
+      - name: aws_access_key
+        required: true
+        title: AWS Access Key
+        description: 'AWS Access Key to authenticate to AWS with.'
+        type: string
+      - name: aws_secret_key
+        required: true
+        title: AWS Secret Key
+        description: 'AWS Secret Key to authenticate to AWS with.'
+        type: string
+      - name: region
+        required: true
+        title: AWS Region
+        description: 'AWS Region to create RDS instance in.'
+        type: string
+        default: "us-west-2"
+      - name: SubscriptionEndPoint
+        required: true
+        title: Subscription End Point
+        description: 'The endpoint that receives notifications from the Amazon SNS topic. The endpoint value depends on the protocol that you specify. This could be a URL or ARN'
+        type: string
+      - name: SubscriptionProtocol
+        required: true
+        title: Subscription Protocol
+        description: 'The subscriptions protocol'
+        type: string
+        default: "sqs"
+    metadata:
+        displayName: "Amazon SNS"
+        longDescription: "Amazon Simple Notification Service (Amazon SNS) is a web service that enables applications, end-users, and devices to instantly send and receive notifications from the cloud"
+        imageUrl: "https://d0.awsstatic.com/cloud-storage/Deck_Databases.png"
+        documentationUrl: "https://aws.amazon.com/documentation/sns/"
+        cost: $0.00
