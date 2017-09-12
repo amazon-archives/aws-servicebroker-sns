@@ -6,10 +6,12 @@ Parameters:
     Description: >-
       The endpoint that receives notifications from the Amazon SNS topic. The
       endpoint value depends on the protocol that you specify. This could be a
-      URL or ARN
+      URL, ARN or SMS-capable telephone number.
   SubscriptionProtocol:
     Type: String
-    Description: The subscription's protocol
+    Description: >-
+      The subscription's protocol. Examples: "http", "https", "email",
+      "email-json", "sms", "sqs", "application", "lambda".
     AllowedValues:
       - http
       - https
@@ -38,6 +40,6 @@ Outputs:
     Value: !Ref SNSTopic
   QueueName:
     Description: Name of newly created SNS Topic
-    Value: !GetAtt 
+    Value: !GetAtt
       - SNSTopic
       - TopicName
