@@ -1,17 +1,17 @@
-- name: Launch sns topic
+- name: Launch SNS topic
   cloudformation:
-   aws_access_key: "{{ aws_access_key }}"
-   aws_secret_key: "{{ aws_secret_key }}"
-   stack_name: "apb-sns-{{ stack_identifier }}"
-   state: "present"
-   region: "{{ region }}"
-   disable_rollback: false
-   template: "{{ role_path }}/files/SNSTopic.yml"
-   template_parameters:
-     SubscriptionEndPoint: "{{ SubscriptionEndPoint }}"
-     SubscriptionProtocol: "{{ SubscriptionProtocol }}"
-   tags:
-     Stack: "ansible-cloudformation"
-     Application: "ansible-sns"
-     Description: "{{ ansible_user_id }} sns {{ ApplicationName }}"
+    aws_access_key: "{{ aws_access_key }}"
+    aws_secret_key: "{{ aws_secret_key }}"
+    stack_name: "apb-sns-{{ stack_identifier }}"
+    state: "present"
+    region: "{{ region }}"
+    disable_rollback: false
+    template: "{{ role_path }}/files/SNSTopic.yml"
+    template_parameters:
+      SubscriptionEndPoint: "{{ SubscriptionEndPoint }}"
+      SubscriptionProtocol: "{{ SubscriptionProtocol }}"
+    tags:
+      Stack: "ansible-cloudformation"
+      Application: "ansible-sns"
+      Description: "{{ stack_identifier }} sns"
   register: sns
