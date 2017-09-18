@@ -1,5 +1,5 @@
 name: sns-apb
-image: ansibleplaybookbundle/sns-apb
+image: docker.io/ansibleplaybookbundle/sns-apb
 description: 'Managed sns topic'
 tags:
   - amazon
@@ -29,7 +29,7 @@ plans:
       - name: region
         required: true
         title: AWS Region
-        description: 'AWS Region to create RDS instance in.'
+        description: 'AWS Region to create SNS topic in.'
         type: string
         default: "us-west-2"
       - name: SubscriptionEndPoint
@@ -46,6 +46,6 @@ plans:
     metadata:
         displayName: "Amazon SNS"
         longDescription: "Amazon Simple Notification Service (Amazon SNS) is a web service that enables applications, end-users, and devices to instantly send and receive notifications from the cloud"
-        imageUrl: "https://d0.awsstatic.com/cloud-storage/Deck_Databases.png"
+        imageUrl: "https://d0.awsstatic.com/icons/console-icons/color/AmazonSNS_Gold.png"
         documentationUrl: "https://aws.amazon.com/documentation/sns/"
         cost: $0.00
