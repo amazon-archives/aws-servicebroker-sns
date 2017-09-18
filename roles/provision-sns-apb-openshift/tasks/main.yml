@@ -15,3 +15,19 @@
       Application: "ansible-sns"
       Description: "{{ stack_identifier }} sns"
   register: sns
+
+- name: Check for SNS CloudFormation error logs
+  debug:
+    var: sns.log
+
+- name: Encode bind credentials
+  asb_encode_binding:
+    fields:
+      subscription_protocol: "{{ SubscriptionProtocol }}"
+      subscription_endpoint: "{{ SubscriptionEndPoint }}"
+      sns_topic_arn:  "{{ sns.stack_outputs.TopicARN }}"
+      sns_topic_name: "{{ sns.stack_outputs.TopicName }}"
+      aws_access_key: "{{ aws_access_key | string }}"
+      aws_secret_key: "{{ aws_secret_key | string }}"
+      region_name: "{{ region | string }}"
+  when: sns.log | length < 1
