@@ -9,3 +9,25 @@
     stack_name: "apb-sns-{{ stack_identifier }}"
     state: "absent"
     region: "{{ region }}"
+  register: sns
+
+- name: Ensure CloudFormation stack deletion was successful
+  debug:
+    var: sns.log
+
+- name: Remove SNS access policy
+  iam_policy:
+    aws_access_key: "{{ aws_access_key }}"
+    aws_secret_key: "{{ aws_secret_key }}"
+    iam_type: user
+    iam_name: "apb-sns-iam-{{ stack_identifier }}"
+    policy_name: "SNSFullAccessPolicy"
+    state: absent
+
+- name: Remove SNS IAM user
+  iam:
+    aws_access_key: "{{ aws_access_key }}"
+    aws_secret_key: "{{ aws_secret_key }}"
+    iam_type: user
+    name: "apb-sns-iam-{{ stack_identifier }}"
+    state: absent

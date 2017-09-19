@@ -16,9 +16,29 @@
       Description: "{{ stack_identifier }} sns"
   register: sns
 
-- name: Check for SNS CloudFormation error logs
+- name: Check for SNS CloudFormation create error logs
   debug:
     var: sns.log
+
+- name: Create SNS IAM user
+  iam:
+    aws_access_key: "{{ aws_access_key }}"
+    aws_secret_key: "{{ aws_secret_key }}"
+    iam_type: user
+    name: "apb-sns-iam-{{ stack_identifier }}"
+    state: present
+    access_key_state: create
+  register: iam_output
+
+- name: Attach SNS access IAM policy
+  iam_policy:
+    aws_access_key: "{{ aws_access_key }}"
+    aws_secret_key: "{{ aws_secret_key }}"
+    iam_type: user
+    iam_name: "apb-sns-iam-{{ stack_identifier }}"
+    policy_name: "SNSFullAccessPolicy"
+    state: present
+    policy_document: "{{ role_path }}/files/SNSFullAccessPolicy.json"
 
 - name: Encode bind credentials
   asb_encode_binding:
@@ -26,8 +46,7 @@
       subscription_protocol: "{{ SubscriptionProtocol }}"
       subscription_endpoint: "{{ SubscriptionEndPoint }}"
       sns_topic_arn:  "{{ sns.stack_outputs.TopicARN }}"
-      sns_topic_name: "{{ sns.stack_outputs.TopicName }}"
-      aws_access_key: "{{ aws_access_key | string }}"
-      aws_secret_key: "{{ aws_secret_key | string }}"
+      aws_access_key: "{{ iam_output.user_meta.access_keys[0].access_key_id }}"
+      aws_secret_key: "{{ iam_output.user_meta.access_keys[0].secret_access_key }}"
       region_name: "{{ region | string }}"
   when: sns.log | length < 1

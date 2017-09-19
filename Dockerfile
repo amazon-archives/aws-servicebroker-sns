@@ -1,7 +1,7 @@
 FROM ansibleplaybookbundle/apb-base
 MAINTAINER Ansible Playbook Bundle Community
 
-RUN yum -y install python-boto3 && yum clean all
+RUN yum -y install python-boto3 python-boto && yum clean all
 
 COPY roles /opt/ansible/roles
 COPY playbooks /opt/apb/actions
