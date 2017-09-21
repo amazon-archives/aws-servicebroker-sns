@@ -1,5 +1,5 @@
 name: sns-apb
-image: docker.io/ansibleplaybookbundle/sns-apb
+image: ansibleplaybookbundle/sns-apb
 description: 'Managed sns topic'
 tags:
   - amazon
