@@ -6,6 +6,11 @@ tags:
   - sns
 bindable: true
 async: optional
+metadata:
+  displayName: "Amazon SNS (APB)"
+  longDescription: "Amazon Simple Notification Service (Amazon SNS) is a web service that enables applications, end-users, and devices to instantly send and receive notifications from the cloud"
+  imageUrl: "https://s3.amazonaws.com/thp-aws-icons-dev/Messaging_AmazonSNS_LARGE.png"
+  documentationUrl: "https://aws.amazon.com/documentation/sns/"
 plans:
   - name: default
     description: 'Managed SNS Topic'
@@ -44,8 +49,6 @@ plans:
         type: string
         default: "sqs"
     metadata:
-        displayName: "Amazon SNS"
-        longDescription: "Amazon Simple Notification Service (Amazon SNS) is a web service that enables applications, end-users, and devices to instantly send and receive notifications from the cloud"
-        imageUrl: "https://d0.awsstatic.com/icons/console-icons/color/AmazonSNS_Gold.png"
-        documentationUrl: "https://aws.amazon.com/documentation/sns/"
+        displayName: "Default"
+        longDescription: ""
         cost: $0.00

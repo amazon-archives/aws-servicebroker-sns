@@ -45,6 +45,7 @@
     fields:
       subscription_protocol: "{{ SubscriptionProtocol }}"
       subscription_endpoint: "{{ SubscriptionEndPoint }}"
+      topic_name: "{{ sns.stack_outputs.TopicARN }}"
       sns_topic_arn:  "{{ sns.stack_outputs.TopicARN }}"
       aws_access_key: "{{ iam_output.user_meta.access_keys[0].access_key_id }}"
       aws_secret_key: "{{ iam_output.user_meta.access_keys[0].secret_access_key }}"
