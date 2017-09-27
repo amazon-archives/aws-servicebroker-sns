@@ -12,8 +12,12 @@ metadata:
   imageUrl: "https://s3.amazonaws.com/thp-aws-icons-dev/Messaging_AmazonSNS_LARGE.png"
   documentationUrl: "https://aws.amazon.com/documentation/sns/"
 plans:
-  - name: default
-    description: 'Managed SNS Topic'
+  - name: topicwithsub
+    description: 'Deploys an SNS Topic and subscribes an endpoint to it'
+    metadata:
+      displayName: "Topic and Subscription"
+      longDescription: ""
+      cost: $0.00
     free: false
     parameters:
       - name: stack_identifier
@@ -48,7 +52,102 @@ plans:
         description: 'The subscriptions protocol'
         type: string
         default: "sqs"
+  - name: topic
+    description: 'deploys an SNS Topic'
     metadata:
-        displayName: "Default"
-        longDescription: ""
-        cost: $0.00
+      displayName: "Topic Only"
+      longDescription: ""
+      cost: $0.00
+    free: false
+    parameters:
+      - name: stack_identifier
+        required: true
+        title: Unique Stack Identifier
+        description: 'Unique identifier to be included in the CloudFormation Stack Name to prevent naming collisions. Must only contain alphanumeric characters and hyphens. (e.g. "sample-sns-stack", "production-sns-08-2017")'
+        type: string
+      - name: aws_access_key
+        required: true
+        title: AWS Access Key
+        description: 'AWS Access Key to authenticate to AWS with.'
+        type: string
+      - name: aws_secret_key
+        required: true
+        title: AWS Secret Key
+        description: 'AWS Secret Key to authenticate to AWS with.'
+        type: string
+      - name: region
+        required: true
+        title: AWS Region
+        description: 'AWS Region to create SNS topic in.'
+        type: string
+        default: "us-west-2"
+  - name: subscription
+    description: 'Creates a subscription to an existing topic'
+    metadata:
+      displayName: "Subscription Only"
+      longDescription: ""
+      cost: $0.00
+    free: false
+    parameters:
+      - name: stack_identifier
+        required: true
+        title: Unique Stack Identifier
+        description: 'Unique identifier to be included in the CloudFormation Stack Name to prevent naming collisions. Must only contain alphanumeric characters and hyphens. (e.g. "sample-sns-stack", "production-sns-08-2017")'
+        type: string
+      - name: aws_access_key
+        required: true
+        title: AWS Access Key
+        description: 'AWS Access Key to authenticate to AWS with.'
+        type: string
+      - name: aws_secret_key
+        required: true
+        title: AWS Secret Key
+        description: 'AWS Secret Key to authenticate to AWS with.'
+        type: string
+      - name: region
+        required: true
+        title: AWS Region
+        description: 'AWS Region to create SNS topic in.'
+        type: enum
+        enum:
+          - ap-northeast-1
+          - ap-northeast-2
+          - ap-south-1
+          - ap-southeast-1
+          - ap-southeast-2
+          - ca-central-1
+          - eu-central-1
+          - eu-west-1
+          - eu-west-2
+          - sa-east-1
+          - us-east-1
+          - us-east-2
+          - us-west-1
+          - us-west-2
+        default: us-west-2
+      - name: SubscriptionEndPoint
+        required: true
+        title: Subscription End Point
+        description: 'The endpoint that receives notifications from the Amazon SNS topic. The endpoint value depends on the protocol that you specify. This could be a URL or ARN'
+        type: string
+      - name: SubscriptionProtocol
+        required: true
+        title: Subscription Protocol
+        description: 'The subscriptions protocol'
+        enum:
+          - ""
+          - http
+          - https
+          - email
+          - email-json
+          - sms
+          - sqs
+          - application
+          - lambda
+        type: enum
+      - name: ExistingTopicArn
+        required: true
+        title: Existing SNS Topic ARN
+        description: 'The Topic ARN to subscribe to'
+        type: string
+        default: ""

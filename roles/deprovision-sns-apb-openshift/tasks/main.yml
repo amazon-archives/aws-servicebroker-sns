@@ -23,6 +23,7 @@
     iam_name: "apb-sns-iam-{{ stack_identifier }}"
     policy_name: "SNSFullAccessPolicy"
     state: absent
+  when: _apb_plan_id != "subscription"
 
 - name: Remove SNS IAM user
   iam:
@@ -31,3 +32,4 @@
     iam_type: user
     name: "apb-sns-iam-{{ stack_identifier }}"
     state: absent
+  when: _apb_plan_id != "subscription"
