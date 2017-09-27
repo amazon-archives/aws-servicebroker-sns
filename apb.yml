@@ -39,8 +39,23 @@ plans:
         required: true
         title: AWS Region
         description: 'AWS Region to create SNS topic in.'
-        type: string
-        default: "us-west-2"
+        type: enum
+        enum:
+          - ap-northeast-1
+          - ap-northeast-2
+          - ap-south-1
+          - ap-southeast-1
+          - ap-southeast-2
+          - ca-central-1
+          - eu-central-1
+          - eu-west-1
+          - eu-west-2
+          - sa-east-1
+          - us-east-1
+          - us-east-2
+          - us-west-1
+          - us-west-2
+        default: us-west-2
       - name: SubscriptionEndPoint
         required: true
         title: Subscription End Point
@@ -50,8 +65,17 @@ plans:
         required: true
         title: Subscription Protocol
         description: 'The subscriptions protocol'
-        type: string
-        default: "sqs"
+        enum:
+          - http
+          - https
+          - email
+          - email-json
+          - sms
+          - sqs
+          - application
+          - lambda
+        type: enum
+        default: sqs
   - name: topic
     description: 'deploys an SNS Topic'
     metadata:
@@ -79,8 +103,23 @@ plans:
         required: true
         title: AWS Region
         description: 'AWS Region to create SNS topic in.'
-        type: string
-        default: "us-west-2"
+        type: enum
+        enum:
+          - ap-northeast-1
+          - ap-northeast-2
+          - ap-south-1
+          - ap-southeast-1
+          - ap-southeast-2
+          - ca-central-1
+          - eu-central-1
+          - eu-west-1
+          - eu-west-2
+          - sa-east-1
+          - us-east-1
+          - us-east-2
+          - us-west-1
+          - us-west-2
+        default: us-west-2
   - name: subscription
     description: 'Creates a subscription to an existing topic'
     metadata:
