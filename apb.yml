@@ -20,21 +20,32 @@ plans:
       cost: $0.00
     free: false
     parameters:
-      - name: stack_identifier
-        required: true
-        title: Unique Stack Identifier
-        description: 'Unique identifier to be included in the CloudFormation Stack Name to prevent naming collisions. Must only contain alphanumeric characters and hyphens. (e.g. "sample-sns-stack", "production-sns-08-2017")'
-        type: string
+      ##########################
+      # AWS Account Information
+      ##########################
       - name: aws_access_key
         required: true
         title: AWS Access Key
         description: 'AWS Access Key to authenticate to AWS with.'
         type: string
+        display_type: password
+        display_group: AWS Account Information
       - name: aws_secret_key
         required: true
         title: AWS Secret Key
         description: 'AWS Secret Key to authenticate to AWS with.'
         type: string
+        display_type: password
+        display_group: AWS Account Information
+      #######################################
+      # Topic and Subscription Plan Settings
+      #######################################
+      - name: stack_identifier
+        required: true
+        title: Unique Stack Identifier
+        description: 'Unique identifier to be included in the CloudFormation Stack Name to prevent naming collisions. Must only contain alphanumeric characters and hyphens. (e.g. "sample-sns-stack", "production-sns-08-2017")'
+        type: string
+        display_group: Topic and Subscription Plan Parameters
       - name: region
         required: true
         title: AWS Region
@@ -56,11 +67,13 @@ plans:
           - us-west-1
           - us-west-2
         default: us-west-2
+        display_group: Topic and Subscription Plan Parameters
       - name: SubscriptionEndPoint
         required: true
         title: Subscription End Point
         description: 'The endpoint that receives notifications from the Amazon SNS topic. The endpoint value depends on the protocol that you specify. This could be a URL or ARN'
         type: string
+        display_group: Topic and Subscription Plan Parameters
       - name: SubscriptionProtocol
         required: true
         title: Subscription Protocol
@@ -76,6 +89,7 @@ plans:
           - lambda
         type: enum
         default: sqs
+        display_group: Topic and Subscription Plan Parameters
   - name: topic
     description: 'deploys an SNS Topic'
     metadata:
@@ -84,21 +98,32 @@ plans:
       cost: $0.00
     free: false
     parameters:
-      - name: stack_identifier
-        required: true
-        title: Unique Stack Identifier
-        description: 'Unique identifier to be included in the CloudFormation Stack Name to prevent naming collisions. Must only contain alphanumeric characters and hyphens. (e.g. "sample-sns-stack", "production-sns-08-2017")'
-        type: string
+      ##########################
+      # AWS Account Information
+      ##########################
       - name: aws_access_key
         required: true
         title: AWS Access Key
         description: 'AWS Access Key to authenticate to AWS with.'
         type: string
+        display_type: password
+        display_group: AWS Account Information
       - name: aws_secret_key
         required: true
         title: AWS Secret Key
         description: 'AWS Secret Key to authenticate to AWS with.'
         type: string
+        display_type: password
+        display_group: AWS Account Information
+      ###########################
+      # Topic Only Plan Settings
+      ###########################
+      - name: stack_identifier
+        required: true
+        title: Unique Stack Identifier
+        description: 'Unique identifier to be included in the CloudFormation Stack Name to prevent naming collisions. Must only contain alphanumeric characters and hyphens. (e.g. "sample-sns-stack", "production-sns-08-2017")'
+        type: string
+        display_group: Topic Only Plan Parameters
       - name: region
         required: true
         title: AWS Region
@@ -120,6 +145,7 @@ plans:
           - us-west-1
           - us-west-2
         default: us-west-2
+        display_group: Topic Only Plan Parameters
   - name: subscription
     description: 'Creates a subscription to an existing topic'
     metadata:
@@ -128,21 +154,32 @@ plans:
       cost: $0.00
     free: false
     parameters:
-      - name: stack_identifier
-        required: true
-        title: Unique Stack Identifier
-        description: 'Unique identifier to be included in the CloudFormation Stack Name to prevent naming collisions. Must only contain alphanumeric characters and hyphens. (e.g. "sample-sns-stack", "production-sns-08-2017")'
-        type: string
+      ##########################
+      # AWS Account Information
+      ##########################
       - name: aws_access_key
         required: true
         title: AWS Access Key
         description: 'AWS Access Key to authenticate to AWS with.'
         type: string
+        display_type: password
+        display_group: AWS Account Information
       - name: aws_secret_key
         required: true
         title: AWS Secret Key
         description: 'AWS Secret Key to authenticate to AWS with.'
         type: string
+        display_type: password
+        display_group: AWS Account Information
+      ##################################
+      # Subscription Only Plan Settings
+      ##################################
+      - name: stack_identifier
+        required: true
+        title: Unique Stack Identifier
+        description: 'Unique identifier to be included in the CloudFormation Stack Name to prevent naming collisions. Must only contain alphanumeric characters and hyphens. (e.g. "sample-sns-stack", "production-sns-08-2017")'
+        type: string
+        display_group: Subscription Only Plan Parameters
       - name: region
         required: true
         title: AWS Region
@@ -164,11 +201,13 @@ plans:
           - us-west-1
           - us-west-2
         default: us-west-2
+        display_group: Subscription Only Plan Parameters
       - name: SubscriptionEndPoint
         required: true
         title: Subscription End Point
         description: 'The endpoint that receives notifications from the Amazon SNS topic. The endpoint value depends on the protocol that you specify. This could be a URL or ARN'
         type: string
+        display_group: Subscription Only Plan Parameters
       - name: SubscriptionProtocol
         required: true
         title: Subscription Protocol
@@ -184,9 +223,11 @@ plans:
           - application
           - lambda
         type: enum
+        display_group: Subscription Only Plan Parameters
       - name: ExistingTopicArn
         required: true
         title: Existing SNS Topic ARN
         description: 'The Topic ARN to subscribe to'
         type: string
         default: ""
+        display_group: Subscription Only Plan Parameters
