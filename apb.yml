@@ -8,11 +8,12 @@ bindable: true
 async: optional
 metadata:
   displayName: "Amazon SNS (APB)"
-  longDescription: "Amazon Simple Notification Service (Amazon SNS) is a web service that enables applications, end-users, and devices to instantly send and receive notifications from the cloud"
   imageUrl: "https://s3.amazonaws.com/thp-aws-icons-dev/Messaging_AmazonSNS_LARGE.png"
+  longDescription: "Amazon Simple Notification Service (Amazon SNS) is a web service that enables applications, end-users, and devices to instantly send and receive notifications from the cloud"
   documentationUrl: "https://aws.amazon.com/documentation/sns/"
+  providerDisplayName: "THP"
 plans:
-  - name: topicwithsub
+  - name: sns-topicwithsub
     description: 'Deploys an SNS Topic and subscribes an endpoint to it'
     metadata:
       displayName: "Topic and Subscription"
@@ -20,11 +21,6 @@ plans:
       cost: $0.00
     free: false
     parameters:
-      - name: stack_identifier
-        required: true
-        title: Unique Stack Identifier
-        description: 'Unique identifier to be included in the CloudFormation Stack Name to prevent naming collisions. Must only contain alphanumeric characters and hyphens. (e.g. "sample-sns-stack", "production-sns-08-2017")'
-        type: string
       - name: aws_access_key
         required: true
         title: AWS Access Key
@@ -76,7 +72,7 @@ plans:
           - lambda
         type: enum
         default: sqs
-  - name: topic
+  - name: sns-topic
     description: 'deploys an SNS Topic'
     metadata:
       displayName: "Topic Only"
@@ -84,11 +80,6 @@ plans:
       cost: $0.00
     free: false
     parameters:
-      - name: stack_identifier
-        required: true
-        title: Unique Stack Identifier
-        description: 'Unique identifier to be included in the CloudFormation Stack Name to prevent naming collisions. Must only contain alphanumeric characters and hyphens. (e.g. "sample-sns-stack", "production-sns-08-2017")'
-        type: string
       - name: aws_access_key
         required: true
         title: AWS Access Key
@@ -120,7 +111,7 @@ plans:
           - us-west-1
           - us-west-2
         default: us-west-2
-  - name: subscription
+  - name: sns-subscription
     description: 'Creates a subscription to an existing topic'
     metadata:
       displayName: "Subscription Only"
@@ -128,11 +119,6 @@ plans:
       cost: $0.00
     free: false
     parameters:
-      - name: stack_identifier
-        required: true
-        title: Unique Stack Identifier
-        description: 'Unique identifier to be included in the CloudFormation Stack Name to prevent naming collisions. Must only contain alphanumeric characters and hyphens. (e.g. "sample-sns-stack", "production-sns-08-2017")'
-        type: string
       - name: aws_access_key
         required: true
         title: AWS Access Key

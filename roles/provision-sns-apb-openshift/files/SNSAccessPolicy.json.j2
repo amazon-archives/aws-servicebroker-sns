@@ -1,0 +1,23 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Resource": "*",
+            "Action": [
+                "sns:Unsubscribe",
+                "sns:ListSubscriptions",
+                "sns:GetSubscriptionAttributes",
+                "sns:SetSubscriptionAttributes"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Resource": "{{ sns.stack_outputs.TopicARN }}",
+            "Action": [
+                "sns:Publish",
+                "sns:Subscribe"
+            ]
+        }
+    ]
+}

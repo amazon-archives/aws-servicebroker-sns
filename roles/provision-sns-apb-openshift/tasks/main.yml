@@ -1,54 +1,65 @@
+- name: include plan vars
+  include_vars:
+    file: "{{ _apb_plan_id }}.yml"
+- name: generate b62 hash
+  shell: "16to62 {{ params_hash }}"
+  register: command_output
+- name: set fact
+  set_fact:
+    stack_suffix: "{{ command_output.stdout }}"
 - name: Launch SNS topic
   cloudformation:
-    aws_access_key: "{{ aws_access_key }}"
-    aws_secret_key: "{{ aws_secret_key }}"
-    stack_name: "apb-sns-{{ stack_identifier }}"
+    stack_name: "apb-sns-{{ stack_suffix }}"
     state: "present"
     region: "{{ region }}"
     disable_rollback: false
     template: "{{ role_path }}/files/SNSTopic.yml"
+    role_arn: "{{ aws_cloudformation_role_arn }}"
     template_parameters:
       SubscriptionEndPoint: "{{ SubscriptionEndPoint if _apb_plan_id != 'topic' else '' }}"
-      SubscriptionProtocol: "{{ SubscriptionProtocol  if _apb_plan_id != 'topic' else '' }}"
+      SubscriptionProtocol: "{{ SubscriptionProtocol if _apb_plan_id != 'topic' else '' }}"
       ExistingTopicArn: "{{ ExistingTopicArn if _apb_plan_id == 'subscription' else '' }}"
       CreateTopic: "{{ 'No' if _apb_plan_id == 'subscription' else 'Yes' }}"
     tags:
-      Stack: "ansible-cloudformation"
-      Application: "ansible-sns"
-      Description: "{{ stack_identifier }} sns"
+      ServiceBrokerId: "{{ application_name }}"
   register: sns
 
 - name: Check for SNS CloudFormation create error logs
   debug:
     var: sns.log
 
-- name: Create SNS IAM user
+- name: Create IAM user
   iam:
-    aws_access_key: "{{ aws_access_key }}"
-    aws_secret_key: "{{ aws_secret_key }}"
     iam_type: user
-    name: "apb-sns-iam-{{ stack_identifier }}"
+    name: "apb-sns-iam-{{ stack_suffix }}"
     state: present
     access_key_state: create
-  when: _apb_plan_id != "subscription"
   register: iam_output
-
-- name: Attach SNS access IAM policy
+  when: _apb_plan_id != "subscription"
+- name: Generate IAM policy temporary json file
+  template:
+    src: "{{ role_path }}/files/SNSAccessPolicy.json.j2"
+    dest: "/tmp/{{ stack_suffix }}.json"
+  when: _apb_plan_id != "subscription"
+- name: Attach IAM policy
   iam_policy:
-    aws_access_key: "{{ aws_access_key }}"
-    aws_secret_key: "{{ aws_secret_key }}"
     iam_type: user
-    iam_name: "apb-sns-iam-{{ stack_identifier }}"
-    policy_name: "SNSFullAccessPolicy"
+    iam_name: "apb-sns-iam-{{ stack_suffix }}"
+    policy_name: "SNS-APB-{{ stack_suffix }}"
     state: present
-    policy_document: "{{ role_path }}/files/SNSFullAccessPolicy.json"
+    policy_document: "/tmp/{{ stack_suffix }}.json"
+  when: _apb_plan_id != "subscription"
+- name: Remove IAM policy temporary json file
+  file:
+    state: absent
+    path: /tmp/{{ stack_suffix }}.json
   when: _apb_plan_id != "subscription"
 
 - name: Encode bind credentials
   asb_encode_binding:
     fields:
       SNS_TOPIC_ARN:  "{{ sns.stack_outputs.TopicARN }}"
-      AWS_ACCESS_KEY: "{{ iam_output.user_meta.access_keys[0].access_key_id if _apb_plan_id != 'subscription' else ' ' }}"
-      AWS_SECRET_KEY: "{{ iam_output.user_meta.access_keys[0].secret_access_key if _apb_plan_id != 'subscription' else ' ' }}"
-      AWS_REGION_NAME: "{{ region | string }}"
-  when: sns.log | length <1
+      SNS_AWS_ACCESS_KEY: "{{ iam_output.user_meta.access_keys[0].access_key_id if _apb_plan_id != 'subscription' else '' }}"
+      SNS_AWS_SECRET_KEY: "{{ iam_output.user_meta.access_keys[0].secret_access_key if _apb_plan_id != 'subscription' else '' }}"
+      SNS_AWS_REGION: "{{ region }}"
+  when: sns.log | length < 1
