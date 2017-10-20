@@ -11,7 +11,7 @@ metadata:
   imageUrl: "https://s3.amazonaws.com/thp-aws-icons-dev/Messaging_AmazonSNS_LARGE.png"
   longDescription: "Amazon Simple Notification Service (Amazon SNS) is a web service that enables applications, end-users, and devices to instantly send and receive notifications from the cloud"
   documentationUrl: "https://aws.amazon.com/documentation/sns/"
-  providerDisplayName: "THP"
+  providerDisplayName: "awsservicebroker"
 plans:
   - name: sns-topicwithsub
     description: 'Deploys an SNS Topic and subscribes an endpoint to it'
