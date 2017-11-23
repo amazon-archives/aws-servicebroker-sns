@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: 2010-09-09
-Description: Best Practice SNS Topic
+Description: 'Best Practice SNS Topic. qs-1nt0fs93c'
 Parameters:
   SubscriptionEndPoint:
     Type: String
