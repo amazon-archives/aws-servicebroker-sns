@@ -8,11 +8,12 @@ bindable: true
 async: optional
 metadata:
   displayName: "Amazon SNS (APB)"
-  longDescription: "Amazon Simple Notification Service (Amazon SNS) is a web service that enables applications, end-users, and devices to instantly send and receive notifications from the cloud"
   imageUrl: "https://s3.amazonaws.com/thp-aws-icons-dev/Messaging_AmazonSNS_LARGE.png"
+  longDescription: "Amazon Simple Notification Service (Amazon SNS) is a web service that enables applications, end-users, and devices to instantly send and receive notifications from the cloud"
   documentationUrl: "https://aws.amazon.com/documentation/sns/"
+  providerDisplayName: "THP"
 plans:
-  - name: topicwithsub
+  - name: sns-topicwithsub
     description: 'Deploys an SNS Topic and subscribes an endpoint to it'
     metadata:
       displayName: "Topic and Subscription"
@@ -28,7 +29,6 @@ plans:
         title: AWS Access Key
         description: 'AWS Access Key to authenticate to AWS with.'
         type: string
-        display_type: password
         display_group: AWS Account Information
       - name: aws_secret_key
         required: true
@@ -37,15 +37,15 @@ plans:
         type: string
         display_type: password
         display_group: AWS Account Information
+      - name: aws_cloudformation_role_arn
+        required: true
+        title: AWS Cloudformation role ARN
+        description: 'IAM role ARN for use as Cloudformation Stack Role.'
+        type: string
+        display_group: AWS Account Information
       #######################################
       # Topic and Subscription Plan Settings
       #######################################
-      - name: stack_identifier
-        required: true
-        title: Unique Stack Identifier
-        description: 'Unique identifier to be included in the CloudFormation Stack Name to prevent naming collisions. Must only contain alphanumeric characters and hyphens. (e.g. "sample-sns-stack", "production-sns-08-2017")'
-        type: string
-        display_group: Topic and Subscription Plan Parameters
       - name: region
         required: true
         title: AWS Region
@@ -90,7 +90,7 @@ plans:
         type: enum
         default: sqs
         display_group: Topic and Subscription Plan Parameters
-  - name: topic
+  - name: sns-topic
     description: 'deploys an SNS Topic'
     metadata:
       displayName: "Topic Only"
@@ -106,7 +106,6 @@ plans:
         title: AWS Access Key
         description: 'AWS Access Key to authenticate to AWS with.'
         type: string
-        display_type: password
         display_group: AWS Account Information
       - name: aws_secret_key
         required: true
@@ -114,6 +113,12 @@ plans:
         description: 'AWS Secret Key to authenticate to AWS with.'
         type: string
         display_type: password
+        display_group: AWS Account Information
+      - name: aws_cloudformation_role_arn
+        required: true
+        title: AWS Cloudformation role ARN
+        description: 'IAM role ARN for use as Cloudformation Stack Role.'
+        type: string
         display_group: AWS Account Information
       ###########################
       # Topic Only Plan Settings
@@ -146,7 +151,7 @@ plans:
           - us-west-2
         default: us-west-2
         display_group: Topic Only Plan Parameters
-  - name: subscription
+  - name: sns-subscription
     description: 'Creates a subscription to an existing topic'
     metadata:
       displayName: "Subscription Only"
@@ -162,7 +167,6 @@ plans:
         title: AWS Access Key
         description: 'AWS Access Key to authenticate to AWS with.'
         type: string
-        display_type: password
         display_group: AWS Account Information
       - name: aws_secret_key
         required: true
@@ -170,6 +174,12 @@ plans:
         description: 'AWS Secret Key to authenticate to AWS with.'
         type: string
         display_type: password
+        display_group: AWS Account Information
+      - name: aws_cloudformation_role_arn
+        required: true
+        title: AWS Cloudformation role ARN
+        description: 'IAM role ARN for use as Cloudformation Stack Role.'
+        type: string
         display_group: AWS Account Information
       ##################################
       # Subscription Only Plan Settings
@@ -231,3 +241,4 @@ plans:
         type: string
         default: ""
         display_group: Subscription Only Plan Parameters
+
