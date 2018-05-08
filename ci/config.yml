@@ -1,9 +1,0 @@
-global:
-  parameters: {}
-  regions:
-    - us-east-1
-
-plans:
-  sns-topic:
-    parameters: {}
-    sample_app: sns-sample-app-apb
